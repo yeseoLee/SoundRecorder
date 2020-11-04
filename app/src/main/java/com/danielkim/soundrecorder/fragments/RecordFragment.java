@@ -1,10 +1,14 @@
 package com.danielkim.soundrecorder.fragments;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +20,11 @@ import android.widget.Toast;
 
 import com.danielkim.soundrecorder.R;
 import com.danielkim.soundrecorder.RecordingService;
+import com.danielkim.soundrecorder.activities.MainActivity;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,7 +76,6 @@ public class RecordFragment extends Fragment {
         super.onCreate(savedInstanceState);
         position = getArguments().getInt(ARG_POSITION);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,7 +95,6 @@ public class RecordFragment extends Fragment {
                 mStartRecording = !mStartRecording;
             }
         });
-
         mPauseButton = (Button) recordView.findViewById(R.id.btnPause);
         mPauseButton.setVisibility(View.GONE); //hide pause button before recording starts
         mPauseButton.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +107,6 @@ public class RecordFragment extends Fragment {
 
         return recordView;
     }
-
     // Recording Start/Stop
     //TODO: recording pause
     private void onRecord(boolean start){

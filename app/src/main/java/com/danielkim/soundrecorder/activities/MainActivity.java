@@ -1,27 +1,30 @@
 package com.danielkim.soundrecorder.activities;
 
+import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.danielkim.soundrecorder.R;
 import com.danielkim.soundrecorder.fragments.FileViewerFragment;
-import com.danielkim.soundrecorder.fragments.LicensesFragment;
 import com.danielkim.soundrecorder.fragments.RecordFragment;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    //Permission
+    static final int RECEIVE_PERMISSION =1;
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private PagerSlidingTabStrip tabs;
@@ -41,6 +44,38 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setPopupTheme(R.style.ThemeOverlay_AppCompat_Light);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+        }
+
+        //사용자에게 권한 요청하기
+        int audioPermissonCheck= ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
+        int storagePermissonCheck= ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if(audioPermissonCheck == PackageManager.PERMISSION_GRANTED && storagePermissonCheck == PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(getApplicationContext(), "Permissions denied: 0", Toast.LENGTH_SHORT).show();
+        }else{
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)){
+                Toast.makeText(getApplicationContext(), "권한이 필요합니다", Toast.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE}, RECEIVE_PERMISSION);
+            }else{
+                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE}, RECEIVE_PERMISSION);
+            }
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int grantResults[]){
+        switch(requestCode){
+            case RECEIVE_PERMISSION:
+                if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(getApplicationContext(), "오디오 권한 승인함", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "오디오 권한 거부함", Toast.LENGTH_SHORT).show();
+                }
+                if(grantResults.length>0 && grantResults[1]==PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(getApplicationContext(), "저장공간 쓰기 권한 승인함", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "저장공간 쓰기 권한 거부함", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 
