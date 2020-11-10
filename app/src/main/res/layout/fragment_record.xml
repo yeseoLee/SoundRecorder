@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fab_colorNormal="@color/primary"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="25dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_mic_white_36dp" />
@@ -36,7 +36,7 @@
         android:indeterminate="false"
         android:max="100"
         android:progress="0"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
