@@ -1,5 +1,6 @@
 package com.danielkim.soundrecorder.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -7,8 +8,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,12 +84,28 @@ public class RecordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View recordView = inflater.inflate(R.layout.fragment_record, container, false);
+        // 물리 버튼 Key Event (볼륨 하단 버튼)
+        recordView.setFocusableInTouchMode(true);
+        recordView.requestFocus();
+        recordView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                    return true;
+                if( keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ) {
+                    onRecord(mStartRecording);
+                    mStartRecording = !mStartRecording;
+                    return true;
+                }
+                return false;
+            }
+        });
 
-        mChronometer = (Chronometer) recordView.findViewById(R.id.chronometer);
+        mChronometer = recordView.findViewById(R.id.chronometer);
         //update recording prompt text
-        mRecordingPrompt = (TextView) recordView.findViewById(R.id.recording_status_text);
+        mRecordingPrompt = recordView.findViewById(R.id.recording_status_text);
 
-        mRecordButton = (FloatingActionButton) recordView.findViewById(R.id.btnRecord);
+        mRecordButton = recordView.findViewById(R.id.btnRecord);
         mRecordButton.setColorNormal(getResources().getColor(R.color.primary));
         mRecordButton.setColorPressed(getResources().getColor(R.color.primary_dark));
         mRecordButton.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +115,9 @@ public class RecordFragment extends Fragment {
                 mStartRecording = !mStartRecording;
             }
         });
-        mPauseButton = (Button) recordView.findViewById(R.id.btnPause);
+
+        // 일지정지 버튼
+        mPauseButton = recordView.findViewById(R.id.btnPause);
         mPauseButton.setVisibility(View.GONE); //hide pause button before recording starts
         mPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,10 +136,13 @@ public class RecordFragment extends Fragment {
         Intent intent = new Intent(getActivity(), RecordingService.class);
 
         if (start) {
+
             // start recording
             mRecordButton.setImageResource(R.drawable.ic_media_stop);
             //mPauseButton.setVisibility(View.VISIBLE);
             Toast.makeText(getActivity(),R.string.toast_recording_start,Toast.LENGTH_SHORT).show();
+            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(500); // 0.5초간 진동
             File folder = new File(Environment.getExternalStorageDirectory() + "/SoundRecorder");
             if (!folder.exists()) {
                 //folder /SoundRecorder doesn't exist, create the folder
@@ -153,6 +178,9 @@ public class RecordFragment extends Fragment {
 
         } else {
             //stop recording
+            Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(500); // 0.5초간 진동
+
             mRecordButton.setImageResource(R.drawable.ic_mic_white_36dp);
             //mPauseButton.setVisibility(View.GONE);
             mChronometer.stop();
@@ -165,7 +193,6 @@ public class RecordFragment extends Fragment {
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
     }
-
     //TODO: implement pause recording
     private void onPauseRecord(boolean pause) {
         if (pause) {

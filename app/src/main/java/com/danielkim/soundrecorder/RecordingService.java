@@ -85,7 +85,8 @@ public class RecordingService extends Service {
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mRecorder.setOutputFile(mFilePath);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        mRecorder.setAudioChannels(1);
+        mRecorder.setAudioChannels(1); //1: mono 2:stereo
+        mRecorder.setAudioSamplingRate(16000); // 샘플링 주파수 16000
         if (MySharedPreferences.getPrefHighQuality(this)) {
             mRecorder.setAudioSamplingRate(44100);
             mRecorder.setAudioEncodingBitRate(192000);

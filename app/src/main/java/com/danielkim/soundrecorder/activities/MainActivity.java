@@ -12,6 +12,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         int storagePermissonCheck= ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         if(audioPermissonCheck == PackageManager.PERMISSION_GRANTED && storagePermissonCheck == PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(getApplicationContext(), "Permissions denied: 0", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Permissions denied: 0", Toast.LENGTH_SHORT).show();
         }else{
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)){
                 Toast.makeText(getApplicationContext(), "권한이 필요합니다", Toast.LENGTH_LONG).show();
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int grantResults[]){
         switch(requestCode){

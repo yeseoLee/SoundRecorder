@@ -4,7 +4,7 @@
     <string name="link">Website: github.com/dkim0419/SoundRecorder</string>
 
     <!-- Toolbar -->
-    <string name="app_name">녹음기</string>
+    <string name="app_name">EMoV Rec</string>
     <string name="action_licenses">라이센스</string>
     <string name="action_settings">설정</string>
     <string name="tab_title_record">녹음</string>
