@@ -64,7 +64,7 @@ public class FileViewerFragment extends Fragment{
 
     FileObserver observer =
             new FileObserver(android.os.Environment.getExternalStorageDirectory().toString()
-                    + "/SoundRecorder") {
+                    + "/EMoV") {
                 // set up a file observer to watch this directory on sd card
                 @Override
                 public void onEvent(int event, String file) {
@@ -72,11 +72,11 @@ public class FileViewerFragment extends Fragment{
                         // user deletes a recording file out of the app
 
                         String filePath = android.os.Environment.getExternalStorageDirectory().toString()
-                                + "/SoundRecorder" + file + "]";
+                                + "/EMoV" + file + "]";
 
                         Log.d(LOG_TAG, "File deleted ["
                                 + android.os.Environment.getExternalStorageDirectory().toString()
-                                + "/SoundRecorder" + file + "]");
+                                + "/EMoV" + file + "]");
 
                         // remove file from database and recyclerview
                         mFileViewerAdapter.removeOutOfApp(filePath);

@@ -12,6 +12,7 @@ import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,10 +141,12 @@ public class RecordFragment extends Fragment {
             // start recording
             mRecordButton.setImageResource(R.drawable.ic_media_stop);
             //mPauseButton.setVisibility(View.VISIBLE);
-            Toast.makeText(getActivity(),R.string.toast_recording_start,Toast.LENGTH_SHORT).show();
+            Toast toast=Toast.makeText(getActivity(),R.string.toast_recording_start,Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, Gravity.CENTER_HORIZONTAL, 300);
+            toast.show();
             Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(500); // 0.5초간 진동
-            File folder = new File(Environment.getExternalStorageDirectory() + "/SoundRecorder");
+            File folder = new File(Environment.getExternalStorageDirectory() + "/EMov");
             if (!folder.exists()) {
                 //folder /SoundRecorder doesn't exist, create the folder
                 folder.mkdir();

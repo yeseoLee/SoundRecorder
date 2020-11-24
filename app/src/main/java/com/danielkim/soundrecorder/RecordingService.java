@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.danielkim.soundrecorder.activities.MainActivity;
@@ -115,7 +116,7 @@ public class RecordingService extends Service {
             mFileName = getString(R.string.default_file_name)
                     + "_" + (mDatabase.getCount() + count) + ".mp4";
             mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath();
-            mFilePath += "/SoundRecorder/" + mFileName;
+            mFilePath += "/EMoV/" + mFileName;
 
             f = new File(mFilePath);
         }while (f.exists() && !f.isDirectory());
@@ -125,7 +126,9 @@ public class RecordingService extends Service {
         mRecorder.stop();
         mElapsedMillis = (System.currentTimeMillis() - mStartingTimeMillis);
         mRecorder.release();
-        Toast.makeText(this, getString(R.string.toast_recording_finish) + " " + mFilePath, Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(this, getString(R.string.toast_recording_finish) + " " + mFilePath, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, Gravity.CENTER_HORIZONTAL, 300);
+        toast.show();
 
         //remove notification
         if (mIncrementTimerTask != null) {
