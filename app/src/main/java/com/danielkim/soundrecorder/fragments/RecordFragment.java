@@ -155,16 +155,21 @@ public class RecordFragment extends Fragment {
             mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
                 @Override
                 public void onChronometerTick(Chronometer chronometer) {
-                    if (mRecordPromptCount == 0) {
+                    if (mRecordPromptCount%3 == 0) {
                         mRecordingPrompt.setText(getString(R.string.record_in_progress) + ".");
-                    } else if (mRecordPromptCount == 1) {
+                    } else if (mRecordPromptCount%3 == 1) {
                         mRecordingPrompt.setText(getString(R.string.record_in_progress) + "..");
-                    } else if (mRecordPromptCount == 2) {
+                    } else if (mRecordPromptCount%3 == 2) {
                         mRecordingPrompt.setText(getString(R.string.record_in_progress) + "...");
-                        mRecordPromptCount = -1;
+                        //mRecordPromptCount = -1;
                     }
-
                     mRecordPromptCount++;
+                    //
+                    if(mRecordPromptCount==600){ //10분 경과시 자동종료
+                        onRecord(mStartRecording);
+                        mStartRecording = !mStartRecording;
+                    }
+                    //
                 }
             });
 
