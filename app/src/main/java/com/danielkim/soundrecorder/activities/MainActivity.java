@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int grantResults[]){
         switch(requestCode){
@@ -113,7 +112,9 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
+    public void replaceFragment(){
+        pager.setCurrentItem(0);
+    }
     public class MyAdapter extends FragmentPagerAdapter {
         private String[] titles = { getString(R.string.tab_title_record),
                 getString(R.string.tab_title_saved_recordings) };

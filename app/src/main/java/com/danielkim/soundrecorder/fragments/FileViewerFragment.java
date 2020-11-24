@@ -7,11 +7,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.danielkim.soundrecorder.R;
+import com.danielkim.soundrecorder.activities.MainActivity;
 import com.danielkim.soundrecorder.adapters.FileViewerAdapter;
 
 public class FileViewerFragment extends Fragment{
@@ -41,6 +43,19 @@ public class FileViewerFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_file_viewer, container, false);
 
+        // 물리 버튼 Key Event ()
+        v.setFocusableInTouchMode(true);
+        v.requestFocus();
+        v.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode ==KeyEvent.KEYCODE_BACK){
+                    ((MainActivity)getActivity()).replaceFragment();
+                    return true;
+                }
+                return false;
+            }
+        });
         RecyclerView mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());

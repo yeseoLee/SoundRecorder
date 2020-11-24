@@ -1,6 +1,7 @@
 package com.danielkim.soundrecorder;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -8,9 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,9 +28,6 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by Daniel on 12/28/2014.
- */
 public class RecordingService extends Service {
 
     private static final String LOG_TAG = "RecordingService";
@@ -154,8 +154,12 @@ public class RecordingService extends Service {
                 mElapsedSeconds++;
                 if (onTimerChangedListener != null)
                     onTimerChangedListener.onTimerChanged(mElapsedSeconds);
-                NotificationManager mgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                /*NotificationManager mgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    mgr.createNotificationChannel(new NotificationChannel("default", "기본 채널", NotificationManager.IMPORTANCE_DEFAULT));
+                }
                 mgr.notify(1, createNotification());
+                 */
             }
         };
         mTimer.scheduleAtFixedRate(mIncrementTimerTask, 1000, 1000);
