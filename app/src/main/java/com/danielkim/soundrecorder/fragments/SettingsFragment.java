@@ -11,10 +11,6 @@ import com.danielkim.soundrecorder.MySharedPreferences;
 import com.danielkim.soundrecorder.R;
 import com.danielkim.soundrecorder.activities.SettingsActivity;
 
-/**
- * Created by Daniel on 5/22/2017.
- */
-
 public class SettingsFragment extends PreferenceFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +34,16 @@ public class SettingsFragment extends PreferenceFragment {
             public boolean onPreferenceClick(Preference preference) {
                 LicensesFragment licensesFragment = new LicensesFragment();
                 licensesFragment.show(((SettingsActivity)getActivity()).getSupportFragmentManager().beginTransaction(), "dialog_licenses");
+                return true;
+            }
+        });
+
+        Preference helpPref = findPreference(getString(R.string.pref_help_key));
+        helpPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                HelpFragment HelpFragment = new HelpFragment();
+                HelpFragment.show(((SettingsActivity)getActivity()).getSupportFragmentManager().beginTransaction(), "dialog_licenses");
                 return true;
             }
         });

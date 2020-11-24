@@ -10,11 +10,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.text.format.DateUtils;
@@ -73,7 +76,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         );
 
         // define an on click listener to open PlaybackFragment
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.exceptCheckboxArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -92,7 +95,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
             }
         });
 
-        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.exceptCheckboxArea.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 deleteFileDialog(holder.getPosition());
@@ -136,6 +139,12 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
                 return false;
             }
         });
+        holder.checkbox.setOnClickListener(new CheckBox.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+            }
+        }) ;
     }
 
     @Override
@@ -143,7 +152,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
 
         View itemView = LayoutInflater.
                 from(parent.getContext()).
-                inflate(R.layout.card_view, parent, false);
+                inflate(R.layout.card_view_checkbox, parent, false);
 
         mContext = parent.getContext();
 
@@ -155,13 +164,16 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         protected TextView vLength;
         protected TextView vDateAdded;
         protected View cardView;
-
+        protected LinearLayout exceptCheckboxArea;
+        protected CheckBox checkbox;
         public RecordingsViewHolder(View v) {
             super(v);
-            vName = (TextView) v.findViewById(R.id.file_name_text);
-            vLength = (TextView) v.findViewById(R.id.file_length_text);
-            vDateAdded = (TextView) v.findViewById(R.id.file_date_added_text);
-            cardView = v.findViewById(R.id.card_view);
+            vName = v.findViewById(R.id.file_name_text);
+            vLength = v.findViewById(R.id.file_length_text);
+            vDateAdded = v.findViewById(R.id.file_date_added_text);
+            cardView = v.findViewById(R.id.card_view_checkbox);
+            checkbox = v.findViewById(R.id.checkBox);
+            exceptCheckboxArea=v.findViewById(R.id.except_checkbox_area);
         }
     }
 

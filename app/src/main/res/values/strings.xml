@@ -23,6 +23,7 @@
     <string name="dialog_title_delete">[삭제 확인]</string>
     <string name="dialog_text_delete">이 파일을 삭제하시겠습니까?</string>
     <string name="dialog_title_licenses">오픈 소스 라이센스</string>
+    <string name="dialog_title_help">도움말</string>
     <string name="dialog_title_share">파일 공유</string>
     <string name="dialog_title_rename">파일 이름 변경</string>
     <string name="dialog_title_options">옵션</string>
@@ -49,7 +50,10 @@
     <string name="pref_high_quality_title">고품질 녹음를 활성화합니다.</string>
     <string name="pref_high_quality_desc">44100Hz로 녹음</string>
     <string name="pref_about_key">pref_about</string>
-    <string name="pref_about_title">About</string>
+    <string name="pref_about_title">License</string>
     <string name="pref_about_desc">v%s</string>
+    <string name="pref_help_key">pref_help</string>
+    <string name="pref_help_title">도움말</string>
+    <string name="pref_help_desc">기능설명</string>
 
 </resources>

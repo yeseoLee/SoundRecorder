@@ -8,4 +8,8 @@
         android:key="@string/pref_about_key"
         android:title="@string/pref_about_title"
         android:summary="@string/pref_about_desc"/>
+    <Preference
+        android:key="@string/pref_help_key"
+        android:title="@string/pref_help_title"
+        android:summary="@string/pref_help_desc" />
 </PreferenceScreen>

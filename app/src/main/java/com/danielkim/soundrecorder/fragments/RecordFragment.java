@@ -85,6 +85,7 @@ public class RecordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View recordView = inflater.inflate(R.layout.fragment_record, container, false);
+
         // 물리 버튼 Key Event (볼륨 하단 버튼)
         recordView.setFocusableInTouchMode(true);
         recordView.requestFocus();
@@ -92,12 +93,12 @@ public class RecordFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
-                        &&event.getAction()!=KeyEvent.ACTION_DOWN)
+                        &&event.getAction()==KeyEvent.ACTION_DOWN)
                     return true;
                 else if( keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
                         &&event.getAction()==KeyEvent.ACTION_UP) {
-                    onRecord(mStartRecording);
                     mStartRecording = !mStartRecording;
+                    onRecord(mStartRecording);
                     return true;
                 }
                 else if(keyCode ==KeyEvent.KEYCODE_BACK){
