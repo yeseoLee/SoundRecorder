@@ -52,7 +52,7 @@ public class RecordFragment extends Fragment {
     private TextView mRecordingPrompt;
     private int mRecordPromptCount = 0;
 
-    private boolean mStartRecording = true;
+    private boolean mStartRecording = false;
     private boolean mPauseRecording = true;
 
     private Chronometer mChronometer = null;
@@ -91,12 +91,21 @@ public class RecordFragment extends Fragment {
         recordView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
+                        &&event.getAction()!=KeyEvent.ACTION_DOWN)
                     return true;
-                if( keyCode == KeyEvent.KEYCODE_VOLUME_DOWN ) {
+                else if( keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
+                        &&event.getAction()==KeyEvent.ACTION_UP) {
                     onRecord(mStartRecording);
                     mStartRecording = !mStartRecording;
                     return true;
+                }
+                else if(keyCode ==KeyEvent.KEYCODE_BACK){
+                    if(mStartRecording){
+                        mStartRecording = !mStartRecording;
+                        onRecord(mStartRecording);
+                    }
+                    return false;
                 }
                 return false;
             }
@@ -112,8 +121,13 @@ public class RecordFragment extends Fragment {
         mRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mStartRecording = !mStartRecording;
+                onRecord(mStartRecording);
+                /*
                 onRecord(mStartRecording);
                 mStartRecording = !mStartRecording;
+                */
+
             }
         });
 
