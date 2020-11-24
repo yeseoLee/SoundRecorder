@@ -95,7 +95,8 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
+                deleteFileDialog(holder.getPosition());
+                /*
                 ArrayList<String> entrys = new ArrayList<String>();
                 entrys.add(mContext.getString(R.string.dialog_file_share));
                 entrys.add(mContext.getString(R.string.dialog_file_rename));
@@ -109,6 +110,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
                 builder.setTitle(mContext.getString(R.string.dialog_title_options));
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
+
                         if (item == 0) {
                             shareFileDialog(holder.getPosition());
                         } if (item == 1) {
@@ -116,6 +118,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
                         } else if (item == 2) {
                             deleteFileDialog(holder.getPosition());
                         }
+
                     }
                 });
                 builder.setCancelable(true);
@@ -129,6 +132,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
                 AlertDialog alert = builder.create();
                 alert.show();
 
+                 */
                 return false;
             }
         });
@@ -230,6 +234,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         }
     }
 
+    /*
     public void shareFileDialog(int position) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
@@ -275,6 +280,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         alert.show();
     }
 
+    */
     public void deleteFileDialog (final int position) {
         // File delete confirm
         AlertDialog.Builder confirmDelete = new AlertDialog.Builder(mContext);

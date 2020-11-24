@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,14 +70,22 @@ public class MainActivity extends AppCompatActivity {
         switch(requestCode){
             case RECEIVE_PERMISSION:
                 if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(getApplicationContext(), "오디오 권한 승인함", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "오디오 권한 승인함", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, Gravity.CENTER_HORIZONTAL, 300);
+                    toast.show();
                 }else{
-                    Toast.makeText(getApplicationContext(), "오디오 권한 거부함", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "오디오 권한 거부함", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, Gravity.CENTER_HORIZONTAL, 300);
+                    toast.show();
                 }
                 if(grantResults.length>0 && grantResults[1]==PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(getApplicationContext(), "저장공간 쓰기 권한 승인함", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "저장공간 쓰기 권한 승인함", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, Gravity.CENTER_HORIZONTAL, 300);
+                    toast.show();
                 }else{
-                    Toast.makeText(getApplicationContext(), "저장공간 쓰기 권한 거부함", Toast.LENGTH_SHORT).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "저장공간 쓰기 권한 거부함", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER, Gravity.CENTER_HORIZONTAL, 300);
+                    toast.show();
                 }
                 break;
         }
