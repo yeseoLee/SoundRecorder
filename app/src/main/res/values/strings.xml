@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- About -->
-    <string name="link">Website: github.com/</string>
+    <string name="link">
+        Credits / Libraries used:\n
+        https://github.com/dkim0419/SoundRecorder\n
+        https://github.com/MohammadAG/Android-SoundRecorder\n
+    </string>
 
     <!-- Toolbar -->
     <string name="app_name">EMoV Rec</string>

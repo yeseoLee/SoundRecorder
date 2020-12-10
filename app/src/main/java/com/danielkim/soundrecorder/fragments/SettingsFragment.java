@@ -5,6 +5,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.danielkim.soundrecorder.BuildConfig;
 import com.danielkim.soundrecorder.MySharedPreferences;
@@ -39,6 +40,7 @@ public class SettingsFragment extends PreferenceFragment {
         });
 
         Preference helpPref = findPreference(getString(R.string.pref_help_key));
+        helpPref.setSummary(getString(R.string.pref_help_desc));
         helpPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
