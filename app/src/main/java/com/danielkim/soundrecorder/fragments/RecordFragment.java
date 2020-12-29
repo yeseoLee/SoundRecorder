@@ -83,8 +83,8 @@ public class RecordFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View recordView = inflater.inflate(R.layout.fragment_record, container, false);
+                             Bundle savedInstanceState) {View recordView = inflater.inflate(R.layout.fragment_record, container,
+        false);
 
         // 물리 버튼 Key Event (볼륨 하단 버튼)
         recordView.setFocusableInTouchMode(true);

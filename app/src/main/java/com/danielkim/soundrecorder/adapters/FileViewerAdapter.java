@@ -33,14 +33,10 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 
-/**
- * Created by Daniel on 12/29/2014.
- */
 public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.RecordingsViewHolder>
     implements OnDatabaseChangedListener{
 
     private static final String LOG_TAG = "FileViewerAdapter";
-
     private DBHelper mDatabase;
 
     RecordingItem item;
@@ -57,7 +53,6 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
 
     @Override
     public void onBindViewHolder(final RecordingsViewHolder holder, int position) {
-
         item = getItem(position);
         long itemDuration = item.getLength();
 
@@ -94,7 +89,6 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
                 }
             }
         });
-
         holder.exceptCheckboxArea.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -142,7 +136,8 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         holder.checkbox.setOnClickListener(new CheckBox.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+                Toast.makeText(mContext, String.format(mContext.getString(R.string.toast_file_selected),
+                        getItem(holder.getPosition()).getName()), Toast.LENGTH_SHORT).show();
             }
         }) ;
     }

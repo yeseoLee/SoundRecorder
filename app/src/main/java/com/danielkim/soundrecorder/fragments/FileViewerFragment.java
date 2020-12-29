@@ -11,6 +11,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.danielkim.soundrecorder.R;
 import com.danielkim.soundrecorder.activities.MainActivity;
@@ -19,6 +21,9 @@ import com.danielkim.soundrecorder.adapters.FileViewerAdapter;
 public class FileViewerFragment extends Fragment{
     private static final String ARG_POSITION = "position";
     private static final String LOG_TAG = "FileViewerFragment";
+
+    private Button btnSelectedItemsDelete=null;
+    private Button btnSelectedItemsSend=null;
 
     private int position;
     private FileViewerAdapter mFileViewerAdapter;
@@ -56,6 +61,23 @@ public class FileViewerFragment extends Fragment{
                 return false;
             }
         });
+
+        // 체크된 아이템 관리 버튼
+        btnSelectedItemsDelete = v.findViewById(R.id.btn_selected_items_delete);
+        btnSelectedItemsSend = v.findViewById(R.id.btn_selected_items_send);
+        btnSelectedItemsDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "삭제됨", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnSelectedItemsSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "전송됨", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         RecyclerView mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
