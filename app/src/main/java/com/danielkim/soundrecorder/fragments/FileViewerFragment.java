@@ -68,13 +68,13 @@ public class FileViewerFragment extends Fragment{
         btnSelectedItemsDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "삭제됨", Toast.LENGTH_SHORT).show();
+                mFileViewerAdapter.deleteSelectedItem();
             }
         });
         btnSelectedItemsSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "전송됨", Toast.LENGTH_SHORT).show();
+                mFileViewerAdapter.clearSelectedItem();
             }
         });
 

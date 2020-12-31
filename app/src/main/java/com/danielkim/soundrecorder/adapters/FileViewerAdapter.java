@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,9 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
     private static final String LOG_TAG = "FileViewerAdapter";
     private DBHelper mDatabase;
 
+    //checkbox isSelected
+    private SparseBooleanArray mSelectedItems = new SparseBooleanArray(0);
+
     RecordingItem item;
     Context mContext;
     LinearLayoutManager llm;
@@ -60,6 +64,18 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         long seconds = TimeUnit.MILLISECONDS.toSeconds(itemDuration)
                 - TimeUnit.MINUTES.toSeconds(minutes);
 
+        //checkbox
+        holder.checkbox.setOnCheckedChangeListener(null);
+        holder.checkbox.setSelected(isItemSelected(position));
+        /*
+        holder.checkbox.setOnClickListener(new CheckBox.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, String.format(mContext.getString(R.string.toast_file_selected),
+                        getItem(holder.getPosition()).getName()), Toast.LENGTH_SHORT).show();
+            }
+        }) ;
+        */
         holder.vName.setText(item.getName());
         holder.vLength.setText(String.format("%02d:%02d", minutes, seconds));
         holder.vDateAdded.setText(
@@ -92,6 +108,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         holder.exceptCheckboxArea.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                Log.d(LOG_TAG,"LogClick Delete Position"+holder.getPosition());
                 deleteFileDialog(holder.getPosition());
                 /*
                 ArrayList<String> entrys = new ArrayList<String>();
@@ -133,13 +150,6 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
                 return false;
             }
         });
-        holder.checkbox.setOnClickListener(new CheckBox.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, String.format(mContext.getString(R.string.toast_file_selected),
-                        getItem(holder.getPosition()).getName()), Toast.LENGTH_SHORT).show();
-            }
-        }) ;
     }
 
     @Override
@@ -154,7 +164,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         return new RecordingsViewHolder(itemView);
     }
 
-    public static class RecordingsViewHolder extends RecyclerView.ViewHolder {
+    public class RecordingsViewHolder extends RecyclerView.ViewHolder {
         protected TextView vName;
         protected TextView vLength;
         protected TextView vDateAdded;
@@ -169,6 +179,23 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
             cardView = v.findViewById(R.id.card_view_checkbox);
             checkbox = v.findViewById(R.id.checkBox);
             exceptCheckboxArea=v.findViewById(R.id.except_checkbox_area);
+            checkbox.setOnClickListener(new CheckBox.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int p=getAdapterPosition();
+                    toggleItemSelected(p);
+                    //TODO
+                    if (mSelectedItems.get(getAdapterPosition(), false) == true){
+                        Toast.makeText(mContext, String.format(mContext.getString(R.string.toast_file_selected),
+                                getItem(getAdapterPosition()).getName()), Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(mContext, String.format(mContext.getString(R.string.toast_file_unselected),
+                                getItem(getAdapterPosition()).getName()), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }) ;
         }
     }
 
@@ -201,6 +228,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         File file = new File(getItem(position).getFilePath());
         file.delete();
 
+        /*
         Toast.makeText(
             mContext,
             String.format(
@@ -209,16 +237,15 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
             ),
             Toast.LENGTH_SHORT
         ).show();
-
+        */
         mDatabase.removeItemWithId(getItem(position).getId());
         notifyItemRemoved(position);
     }
 
-    //TODO
     public void removeOutOfApp(String filePath) {
         //user deletes a saved recording out of the application through another application
     }
-
+    /*
     public void rename(int position, String name) {
         //rename a file
 
@@ -241,7 +268,6 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
         }
     }
 
-    /*
     public void shareFileDialog(int position) {
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
@@ -317,5 +343,49 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Re
 
         AlertDialog alert = confirmDelete.create();
         alert.show();
+    }
+
+    //checkbox 관련 함수
+    private void toggleItemSelected(int position) {
+        if (mSelectedItems.get(position, false) == true) {
+            mSelectedItems.delete(position);
+            notifyItemChanged(position);
+        } else {
+            mSelectedItems.put(position, true);
+            notifyItemChanged(position);
+        }
+    }
+    private boolean isItemSelected(int position) {
+        return mSelectedItems.get(position, false);
+    }
+    public void clearSelectedItem() {
+        int position;
+        for (int i = 0; i < mSelectedItems.size(); i++) {
+            position = mSelectedItems.keyAt(i);
+            Log.d(LOG_TAG, "Clear Position"+ position);
+            mSelectedItems.put(position, false);
+            notifyItemChanged(position);
+            Toast.makeText(mContext,
+                    "Selected items: \n" + mSelectedItems.toString(), Toast.LENGTH_LONG)
+                    .show();
+        }
+        mSelectedItems.clear();
+    }
+    public void deleteSelectedItem() {
+        int position;
+        for (int i = mSelectedItems.size()-1; i >=0 ; i--) {
+            position = mSelectedItems.keyAt(i);
+            Log.d(LOG_TAG, "Delete Position"+ position);
+            try {
+                //remove item from database, recyclerview, and storage
+                remove(position);
+
+            } catch (Exception e) {
+                Log.e(LOG_TAG, "exception", e);
+            }
+            //mSelectedItems.put(position, false);
+            //notifyItemChanged(position);
+        }
+        mSelectedItems.clear();
     }
 }
