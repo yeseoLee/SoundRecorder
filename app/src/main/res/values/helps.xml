@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="help_title_fab">EMoV Rec 기능서</string>
+    <string name="help_subtitle_fab">기본 설정</string>
+    <string name="help_content_fab">
+        [녹음 파일 정보]\n
+        주파수: 16000Hz, 채널: 모노\n
+        파일 확장자:.mp4 \n
+        파일이름,녹음 길이, 녹음 시각 정보를 담고있음\n
+        \n
+        [녹음 종료]\n
+        10분 경과시 녹음자동 종료\n
+        앱 종료시 자동 종료\n
+        녹음 종료시 진동\n
+        \n
+        [녹음 파일 저장]\n
+        기본 내장 스토라지에 "EMoV"폴더 생성후 저장\n
+        파일이름: 음성_123.mp4\n
+    </string>
+    <string name="help_subtitle1_fab">녹음 탭</string>
+    <string name="help_content1_fab">
+        [일반]\n
+        1. 원형 녹음 아이콘 버튼을 눌르면 녹음 시작\n
+        2. 녹음 시작을 알리는 진동\n
+        3. 녹음이 시작되면 버튼이 녹음 정지 버튼으로 변경됨\n
+        4. 녹음 정지 버튼을 누르면 녹음 정지\n
+        5. 녹음 정지를 알리는 진동, 파일 저장 위치를 알리는 토스트 메세지\n
+        \n
+        [물리버튼]\n
+        1. 볼륨 하단 버튼을 누르면 녹음 시작\n
+        2. 버튼 하단 버튼을 한번 더 누르면 녹음 정지\n
+        나머지 기능은 일반 녹음과 동일\n
+    </string>
+    <string name="help_subtitle2_fab">재생목록 탭</string>
+    <string name="help_content2_fab">
+        [재생목록]\n
+        파일 이름,녹음 시각, 녹음 길이 등을 보여줌\n
+        \n
+        [재생]\n
+        파일을 클릭하면 재생 탭이 나와서 파일 재생\n
+        \n
+        [삭제]\n
+        파일을 길게 클릭하면 파일 삭제 탭이 나와서 파일 삭제\n
+    </string>
+    <string name="help_subtitle3_fab">설정 탭</string>
+    <string name="help_content3_fab">
+        [진입]\n
+        우측 상단 점 세개 클릭으로 진입\n
+        \n
+        [고품질 녹음 활성화]\n
+        체크 박스 활성화시 44100Hz로 녹음(녹음 품질 향상)\n
+        \n
+        [License]\n
+        사용한 오픈 소스 명시\n
+        \n
+        [도움말]\n
+        앱 기본 설정값 및 기능 설명\n
+    </string>
+</resources>
